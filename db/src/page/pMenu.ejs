@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Menu.css" />
+    <title>Menu</title>
+  </head>
+  <body>
+    <h1>사나이기백 커피 고르기 메뉴</h1>
+    <table class="menuTable">
+      <thead>
+        <tr>
+          <th>항목번호</th>
+          <th>메뉴이름</th>
+          <th>메뉴분류</th>
+          <th>메뉴가격</th>
+          <th>수량선택</th>
+          <th>구매여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < menuInfo.length; i++){ %>
+        <tr>
+          <td><%=menuInfo[i].항목번호%></td>
+          <td><%=menuInfo[i].이름%></td>
+          <td><%=menuInfo[i].가격%></td>
+          <td><%=menuInfo[i].분류%></td>
+          <td><input type="number" value="0", min="0"/></td>
+          <td><button>담기</button></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <h1>주문내역</h1>
+  </body>
+</html>

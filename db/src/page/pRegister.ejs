@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Register.css" />
+    <title>Register</title>
+  </head>
+  <body>
+    <form action="/pRegister" method="POST">
+      <div class="register">
+        <span>고객이름</span>
+        <input class="name" name="username" type="text" />
+        <br />
+        <span>주소</span>
+        <input class="address" name="useraddress" type="text" />
+        <br />
+        <span>휴대폰번호</span>
+        <input class="phone" name="userphone" type="text" />
+        <br />
+        <span>아이디</span>
+        <input class="id" name="userid" type="text" />
+        <br />
+        <span>비밀번호</span>
+        <input class="passward" name="userpwd" type="text" />
+        <br />
+        <button type="button" onclick="location.href='/'">취소</button>
+        <button type="submit">회원가입</button>
+      </div>
+    </form>
+  </body>
+</html>
