@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require("express-session")
 
 const app = express();
 
@@ -19,12 +20,23 @@ app.set('views', path.join(__dirname,'/src/page'));
 app.set('view engine', 'ejs');
 // 탬플릿 엔진 설정
 
+// 세션 정의, 메모리 세션이라 PC 메모리 사용해서 과부화 가능성 있음.
+app.use(session({
+    secret : "20191598", // 세션보호 비밀키
+    resave : false, // 세션 저장 여부 보통 false
+    saveUninitialized : true, // 초기화되지 않은 세션 저장 여부 보통 true
+    cookie : {
+      maxAge : 3600000, // 세션 초기화 1시간
+      httpOnly : true // 자바스크립트에서 쿠키접근 제한
+    }
+}));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // ejs에 css 추가를 위한 구문
-app.use(express.static("./src/style/"));
+app.use(express.static(path.join(__dirname, "./src/style/")));
 
 // 경로지정(건들여도됨)
 app.use('/', gotoMain);
