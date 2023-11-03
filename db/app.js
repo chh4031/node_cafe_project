@@ -26,10 +26,11 @@ app.use(cookieParser());
 // ejs에 css 추가를 위한 구문
 app.use(express.static("./src/style/"));
 
+// 경로지정(건들여도됨)
 app.use('/', gotoMain);
-app.use('/pMenu', gotoMenu);
-app.use('/pRegister', gotoRegister)
-app.use('/pLogin', gotoLogin);
+app.use('/moveMenu', gotoMenu);
+app.use('/moveRegister', gotoRegister)
+app.use('/moveLogin', gotoLogin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

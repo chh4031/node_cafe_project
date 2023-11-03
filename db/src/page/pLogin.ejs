@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <link rel="stylesheet" href="Login.css" />
     <title>Login</title>
-</head>
-<body>
-    <form action="" method="POST">
-        <span>아이디</span>
-        <input type="text"/>
-        <span>비밀번호</span>
-        <input type="text"/>
+  </head>
+  <body>
+    <% if (notLogin == true) { %>
+        <script>
+          alert('아이디 또는 비밀번호 틀림!');
+        </script>
+      <% } %>
+    <form action="/moveLogin" method="POST">
+      <span>아이디</span>
+      <input class="loginId" name="loginId" type="text" />
+      <span>비밀번호</span>
+      <input class="loginPwd" name="loginPwd" type="text" />
+      <button type="submit">로그인</button>
     </form>
-</body>
+  </body>
 </html>
