@@ -1,3 +1,57 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="error.css" />
+    <title>Document</title>
+    <style>
+      @keyframes fontt {
+        0%{
+          color: green;
+        }
+        50%{
+          color: red
+        }
+        100%{
+          color: white;
+        }
+      }
+      @keyframes ani {
+        0% {
+          margin-left: 0px;
+          color: white;
+          font-size: 10px;
+        }
+        50%{
+          color: orange;
+        }
+        100% {
+          margin-left: 800px;
+          color: red;
+        }
+      }
+      html {
+        animation: back 10s linear 0s infinite alternate;
+        background-color: black;
+      }
+      h1 {
+        display: flex;
+        position: fixed;
+        align-items: center;
+        animation: ani 10s linear 0s infinite alternate;
+      }
+      h2{
+        animation: ani 5s linear 0s infinite alternate;
+        position: fixed;
+      }
+      pre{
+        animation: fontt 3s linear 0s infinite alternate-reverse;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= message %></h1>
+    <h2><%= error.status %></h2>
+    <pre><%= error.stack %></pre>
+  </body>
+</html>
