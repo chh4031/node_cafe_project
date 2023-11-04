@@ -1,3 +1,18 @@
 h1 {
     color: aqua;
 }
+
+.register_on { 
+    visibility:visible;
+}
+.register_off{
+    visibility: hidden;
+}
+
+.mypage_on { 
+    visibility:visible;
+}
+.mypage_off{
+    visibility: hidden;
+}
+
