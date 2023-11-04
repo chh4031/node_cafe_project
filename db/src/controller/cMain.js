@@ -8,22 +8,23 @@ const cMain = async(req, res) => {
     // 세션 초기값 구현 및 체크 로직
     try{
         if (req.session.loginInfo.loginId != undefined){
-            console.log("위 정상")
+            console.log("세션 접속중")
             res.render('pMain', {
                 sessionLoginId : req.session.loginInfo.loginId,
                 sessionLoginPwd : req.session.loginInfo.loginPwd,
                 sessionLoginName : req.session.loginInfo.loginName
             })
         }else{
-            console.log("아래 정상")
+            console.log("세션 접속 대기중(로그인전 undefined)")
             res.render('pMain', {
                 sessionLoginId : undefined,
                 sessionLoginPwd : undefined,
                 sessionLoginName : undefined
         })
-        console.log(req.session.loginInfo.LoginId)
+        // console.log(req.session.loginInfo.LoginId)
     }
     }catch{
+        console.log("세션 비접속중(로그아웃 undefined)")
         req.session.loginInfo = {
             loginName : undefined,
             loginId : undefined,
@@ -39,7 +40,7 @@ const cMain = async(req, res) => {
     }
 
 const cLogout = async(req, res) => {
-    console.log('실행됨')
+    console.log('로그아웃 실행됨')
     res.render('pMain')
 }
 module.exports = { cMain, cLogout };
