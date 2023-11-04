@@ -15,6 +15,7 @@ const loginCheckTodb = async(req, res) =>{
     );
     // console.log(member[0]);
     for(let i = 0;i < member[0].length; i++){
+        // console.log(member[0][i])
         if(loginId === member[0][i].고객아이디 && String(loginPwd) === member[0][i].고객비밀번호){
             console.log('로그인 성공')
             req.session.loginInfo = {
@@ -26,16 +27,10 @@ const loginCheckTodb = async(req, res) =>{
             return res.redirect("/")
         }else{
             console.log('로그인 실패')
-            return res.render('pLogin', {
-                notLogin : true,
-                sessionLoginId : undefined,
-                sessionLoginPwd : undefined,
-                sessionLoginName : undefined
-            })
         }
     }
     return res.render("pLogin", {
-        notLogin : false
+        notLogin : true
     })
 }
 
