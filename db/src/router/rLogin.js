@@ -6,4 +6,6 @@ router.get("/", loginController.cLogin)
 
 router.post("/", loginController.loginCheckTodb)
 
+router.get("/logout", loginController.cLogout)
+
 module.exports = router;

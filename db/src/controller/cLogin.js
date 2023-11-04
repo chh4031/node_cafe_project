@@ -17,11 +17,20 @@ const loginCheckTodb = async(req, res) =>{
     for(let i = 0;i < member[0].length; i++){
         if(loginId === member[0][i].고객아이디 && String(loginPwd) === member[0][i].고객비밀번호){
             console.log('로그인 성공')
+            req.session.loginInfo = {
+                loginName : member[0][i].고객이름,
+                loginId : member[0][i].고객아이디,
+                loginPwd : member[0][i].고객비밀번호
+            }
+            console.log(req.session.loginInfo.loginId)
             return res.redirect("/")
         }else{
             console.log('로그인 실패')
             return res.render('pLogin', {
-                notLogin : true
+                notLogin : true,
+                sessionLoginId : undefined,
+                sessionLoginPwd : undefined,
+                sessionLoginName : undefined
             })
         }
     }
@@ -30,4 +39,9 @@ const loginCheckTodb = async(req, res) =>{
     })
 }
 
-module.exports = { cLogin, loginCheckTodb }
+const cLogout = async(req, res) => {
+    delete req.session.loginInfo;
+    return res.redirect("/")
+}
+
+module.exports = { cLogin, loginCheckTodb, cLogout }

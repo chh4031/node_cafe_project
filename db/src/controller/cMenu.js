@@ -10,7 +10,8 @@ const cMenu = async(req, res) => {
         console.log("메뉴불러오기 오류");
     }
     res.render('pMenu',{
-        menuInfo : menuList[0]
+        menuInfo : menuList[0],
+        sessionLoginName : req.session.loginInfo.loginName
     });
 }
 
