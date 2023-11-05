@@ -4,4 +4,6 @@ const router = express.Router();
 const menuController = require('../controller/cMenu');
 router.get("/", menuController.cMenu);
 
+router.post("/order", menuController.cOrder);
+
 module.exports = router;
