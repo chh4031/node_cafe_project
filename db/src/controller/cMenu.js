@@ -15,4 +15,19 @@ const cMenu = async(req, res) => {
     });
 }
 
-module.exports = { cMenu };
+
+// 주문항목들을 추가하기 위한 밑작업
+const cOrder = async(req, res) => {
+    console.log("주문 버튼 누름");
+    const { menuNumber, menuName, menuPrice, menuClass, menuCount } = req.body;
+    console.log(menuNumber, menuName, menuPrice, menuClass, menuCount);
+
+    // const {} = req.body
+    // const orderMenu = await useDB.query(`
+    // insert into 메뉴단위
+
+    // `    )
+    return res.redirect("/moveMenu")
+}
+
+module.exports = { cMenu, cOrder };
