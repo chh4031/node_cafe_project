@@ -13,7 +13,6 @@ const gotoMenu = require('./src/router/rMenu');
 const gotoRegister = require('./src/router/rRegister');
 const gotoLogin = require('./src/router/rLogin');
 
-
 // 건들지 ~
 // view engine setup
 app.set('views', path.join(__dirname,'/src/page'));
@@ -49,7 +48,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // ejs에 css 추가를 위한 구문
-app.use(express.static(path.join(__dirname, "./src/style/")));
+app.use(express.static(path.join(__dirname, "./src/style")));
 
 // 경로지정(건들여도됨)
 app.use('/', gotoMain);

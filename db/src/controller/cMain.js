@@ -12,14 +12,15 @@ const cMain = async(req, res) => {
             res.render('pMain', {
                 sessionLoginId : req.session.loginInfo.loginId,
                 sessionLoginPwd : req.session.loginInfo.loginPwd,
-                sessionLoginName : req.session.loginInfo.loginName
+                sessionLoginName : req.session.loginInfo.loginName,
             })
         }else{
             console.log("세션 접속 대기중(로그인전 undefined)")
             res.render('pMain', {
                 sessionLoginId : undefined,
                 sessionLoginPwd : undefined,
-                sessionLoginName : undefined
+                sessionLoginName : undefined,
+                
         })
         // console.log(req.session.loginInfo.LoginId)
     }

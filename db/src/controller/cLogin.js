@@ -36,6 +36,7 @@ const loginCheckTodb = async(req, res) =>{
 
 const cLogout = async(req, res) => {
     delete req.session.loginInfo;
+    delete req.session.Pay;
     return res.redirect("/")
 }
 

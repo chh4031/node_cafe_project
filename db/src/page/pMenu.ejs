@@ -1,56 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Menu.css" />
+    <title>Menu</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="Menu.css" />
-  <title>Menu</title>
-</head>
-
-<body>
-  <h1>데이터베이스 커피 고르기 메뉴</h1>
-  <h2>현재 접속 유저 : <%=sessionLoginName %>
-  </h2>
-  <table class="menuTable">
-    <thead>
-      <tr>
-        <th>항목번호</th>
-        <th>메뉴이름</th>
-        <th>메뉴분류</th>
-        <th>메뉴가격</th>
-        <th>수량선택</th>
-        <th>구매여부</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(let i=0; i < menuInfo.length; i++){ %>
+  <body>
+    <h1>데이터베이스 커피 고르기 메뉴</h1>
+    <h2>현재 접속 유저 : <%=sessionLoginName %></h2>
+    <table class="menuTable">
+      <thead>
+        <tr>
+          <th>항목번호</th>
+          <th>메뉴이름</th>
+          <th>메뉴분류</th>
+          <th>메뉴가격</th>
+          <th>수량선택</th>
+          <th>구매여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i=0; i < menuInfo.length; i++){ %>
         <form action="/moveMenu/order" method="post">
           <tr>
             <td>
               <%=menuInfo[i].항목번호%>
-              <input type="hidden" name="menuNumber" value="<%=menuInfo[i].항목번호%>">
+              <input
+                type="hidden"
+                name="menuNumber"
+                value="<%=menuInfo[i].항목번호%>"
+              />
             </td>
             <td>
               <%=menuInfo[i].이름%>
-              <input type="hidden" name="menuName" value="<%=menuInfo[i].이름%>">
+              <input
+                type="hidden"
+                name="menuName"
+                value="<%=menuInfo[i].이름%>"
+              />
             </td>
             <td>
               <%=menuInfo[i].가격%>
-              <input type="hidden" name="menuPrice" value="<%=menuInfo[i].가격%>">
+              <input
+                type="hidden"
+                name="menuPrice"
+                value="<%=menuInfo[i].가격%>"
+              />
             </td>
             <td>
               <%=menuInfo[i].분류%>
-              <input type="hidden" name="menuClass" value="<%=menuInfo[i].분류%>">
+              <input
+                type="hidden"
+                name="menuClass"
+                value="<%=menuInfo[i].분류%>"
+              />
             </td>
-            <td><input type="number" name="menuCount" value="0" , min="0" /></td>
+            <td>
+              <input type="number" name="menuCount" value="0" , min="0" />
+            </td>
             <td><button type="submit">담기</button></td>
           </tr>
         </form>
         <% } %>
-    </tbody>
-  </table>
-  <h1>주문내역</h1>
-
-</body>
-
+      </tbody>
+    </table>
+    <h1>주문내역</h1>
+    <table class="menuTable">
+      <thead>
+        <tr>
+          <th>항목번호</th>
+          <th>메뉴이름</th>
+          <th>메뉴분류</th>
+          <th>메뉴가격</th>
+          <th>선택수량</th>
+          <th>주문고객</th>
+          <th>삭제여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td><button>삭제</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button>구매확정</button>
+  </body>
 </html>
