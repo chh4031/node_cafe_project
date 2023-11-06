@@ -6,6 +6,23 @@ const today = `${time.time().year}-${time.time().month}-${time.time().date}`
 const cMenu = async(req, res) => {
     console.log('메뉴페이지 완료');
     const menuList = await useDB.query('select * from 메뉴항목');
+    const orderList = await useDB.query('select * from 주문');
+    const newOrderList = orderList[0]
+
+    // console.log(newOrderList.length)
+    // 메뉴 들어오면 주문이 자동생성, 주문대기의 개념(결제 수단만 정의 안됨.)
+    try{
+        for(let num = 0; num < newOrderList.length;num = num + 1){
+                if(newOrderList[num].주문날짜 != today && newOrderList[num].고객_고객아이디 != req.session.loginInfo.loginId){
+                    console.log("주문중복아님")
+                    const insertOrder = await useDB.query(`
+                    insert into 주문(주문날짜, 주문방식, 고객_고객아이디) values(?,?,?)`, 
+                    [today,'선택안함', req.session.loginInfo.loginId])
+            }
+        }
+    }catch{
+        console.log("중복발생")
+    }
     try{
         // console.log(menuList[0]);
         console.log('메뉴 불러오기 성공');
@@ -39,4 +56,4 @@ const cOrder = async(req, res) => {
     }
 }
 
-module.exports = { cMenu, cOrder};
+module.exports = { cMenu, cOrder} ;
