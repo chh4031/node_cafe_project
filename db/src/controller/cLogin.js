@@ -23,6 +23,7 @@ const loginCheckTodb = async(req, res) =>{
                 loginId : member[0][i].고객아이디,
                 loginPwd : member[0][i].고객비밀번호
             }
+            req.session.orderNum = 0;
             console.log(req.session.loginInfo.loginId)
             return res.redirect("/")
         }else{
@@ -36,7 +37,7 @@ const loginCheckTodb = async(req, res) =>{
 
 const cLogout = async(req, res) => {
     delete req.session.loginInfo;
-    delete req.session.Pay;
+    delete req.session.orderNum;
     return res.redirect("/")
 }
 
