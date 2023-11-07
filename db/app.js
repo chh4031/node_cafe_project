@@ -26,7 +26,7 @@ const options = {
   user : 'root',
   password : '0000',
   port : 15628,
-  database : 'cafedb'
+  database : 'cafedatabase'
 };
 
 let sessionStore = new MySQLStore(options);
