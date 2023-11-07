@@ -15,6 +15,7 @@ const cMain = async(req, res) => {
                 sessionLoginName : req.session.loginInfo.loginName,
             })
         }else{
+            req.session.orderNum = 0;
             console.log("세션 접속 대기중(로그인전 undefined)")
             res.render('pMain', {
                 sessionLoginId : undefined,
@@ -25,13 +26,13 @@ const cMain = async(req, res) => {
         // console.log(req.session.loginInfo.LoginId)
     }
     }catch{
+        req.session.orderNum = 0;
         console.log("세션 비접속중(로그아웃 undefined)")
         req.session.loginInfo = {
             loginName : undefined,
             loginId : undefined,
             loginPwd : undefined
         }
-
         res.render('pMain',{
             sessionLoginId : undefined,
             sessionLoginPwd : undefined,
