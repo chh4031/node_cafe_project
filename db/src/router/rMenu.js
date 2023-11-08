@@ -8,4 +8,6 @@ router.post("/orderOK", menuController.cOrderOK)
 
 router.post("/order", menuController.cOrder);
 
+router.post("/orderDelete", menuController.cDelete);
+
 module.exports = router;

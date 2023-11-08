@@ -93,4 +93,23 @@ const cOrder = async(req, res) => {
         orderSelect : true})
 };
 
-module.exports = { cMenu, cOrder, cOrderOK} ;
+const cDelete = async(req, res) => {
+    const menuList = await useDB.query('select * from 메뉴항목');
+
+    const { DeleteOrderNum, DeleteMenuNum } = req.body
+    const DeleteOrder = await useDB.query(`
+    delete from 주문내역 where 주문_주문번호 = ${DeleteOrderNum} and 메뉴항목_항목번호 = ${DeleteMenuNum} `)
+
+    const orderList = await useDB.query(`
+    select * from (주문내역 inner join 메뉴항목 on 주문내역.메뉴항목_항목번호 = 메뉴항목.항목번호) inner join 주문 on 주문내역.주문_주문번호 = 주문.주문번호 where 주문_주문번호 = ${req.session.orderNum}`)
+
+    res.render("pMenu", {
+        menuInfo : menuList[0],
+        orderList : orderList[0],
+        sessionLoginName : req.session.loginInfo.loginName,
+        orderNumber : req.session.orderNum,
+        orderSelect : true
+    })
+}
+
+module.exports = { cMenu, cOrder, cOrderOK, cDelete} ;
