@@ -10,4 +10,6 @@ router.post("/order", menuController.cOrder);
 
 router.post("/orderDelete", menuController.cDelete);
 
+router.get("/confirm", menuController.cConfrim)
+
 module.exports = router;

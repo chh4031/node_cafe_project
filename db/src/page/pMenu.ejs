@@ -5,6 +5,13 @@
     <link rel="stylesheet" href="Menu.css" />
     <link rel="stylesheet" href="../Menu.css" />
     <title>Menu</title>
+
+    <script>
+      const Datamove = (data) => {
+        const datajson = JSON.stringify(data);
+        window.location.href = '/moveDetail?data=' + datajson
+      };
+    </script>
   </head>
 
   <body>
@@ -22,7 +29,7 @@
       <thead>
         <tr>
           <th>항목번호</th>
-          <th>메뉴이름</th>
+          <th class="menuname">메뉴이름</th>
           <th>메뉴가격</th>
           <th>메뉴분류</th>
           <th>수량선택</th>
@@ -41,7 +48,7 @@
                 value="<%=menuInfo[i].항목번호%>"
               />
             </td>
-            <td>
+            <td class="menuname" onclick="Datamove( { menuName :'<%=menuInfo[i].이름 %>' , menuId : '<%=menuInfo[i].항목번호 %>'})">
               <%=menuInfo[i].이름%>
               <input
                 type="hidden"
@@ -119,5 +126,6 @@
         <% } %>
       </tbody>
     </table>
+    <button onclick="location.href='/moveMenu/confirm'" class="optionCSS">구매확정</button>
   </body>
 </html>
