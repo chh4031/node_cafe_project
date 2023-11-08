@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Detail.css" />
+    <link rel="stylesheet" href="../Detail.css" />
+    <title>Detail</title>
+  </head>
+  <body>
+    <form action="/moveDetail/orderDetail" method="POST">
+      <h1>상세정보 페이지</h1>
+      <h1>메뉴이름 : <%=menuName %></h1>
+      <input
+        type="hidden"
+        name="menuName"
+        value="<%=menuName%>"/>
+      <p>
+        현재 주문번호(만약 메인 페이지를 갔다가 왔다면 이전 주문번호임)
+        :<%=orderNumber%>
+      </p>
+      <p>메뉴항목번호 : <%=totalInfo[0].항목번호 %></p>
+        <input
+            type="hidden"
+            name="detailNumber"
+            value="<%=totalInfo[0].항목번호 %>"/>
+      <p>메뉴가격 : <%=totalInfo[0].가격 %></p>
+      <input
+            type="hidden"
+            name="detailPrice"
+            value="<%=totalInfo[0].가격 %>"/>
+      <p>메뉴분류 : <%=totalInfo[0].분류 %></p>
+      <p>재료정보 :</p>
+        <table class="menuTable">
+            <thead>
+                <tr>
+                    <th>재료이름</th>
+                    <th>들어가는양</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i = 0; i < totalInfo.length; i++) { %>
+                <tr>
+                    <td><%=totalInfo[i].재료이름 %></td>
+                    <td><%=totalInfo[i].필요양 %></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+      <p>오늘날짜 : <%=today%></p>
+      <span>수량선택 : </span><input type="number" name="detailCount" value="0" , min="0" />
+      <button type="submit">구매하기</button>
+    </form>
+  </body>
+</html>
