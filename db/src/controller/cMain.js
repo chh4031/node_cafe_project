@@ -4,6 +4,7 @@ const cMain = async(req, res) => {
     // const he = await useDB.query('select JSON_EXTRACT(data, "$.new") AS new_data from sessions');
     // console.log(he[0][0].new_data.good)
     req.session.selectOption = false;
+    req.session.orderUseSearch = false;
     console.log('메인페이지 완료')
 
     // 주문내역 체크 코드(모든 페이지에서 써야함.)
