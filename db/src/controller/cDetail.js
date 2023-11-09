@@ -6,6 +6,8 @@ let ordernum = 1000;
 
 const cDetail = async(req, res) => {
 
+    req.session.confirm = true;
+
     // 주문내역 체크 코드(모든 페이지에서 써야함.)
     if(req.session.confirm == true){
         console.log("주문내역 유지")
