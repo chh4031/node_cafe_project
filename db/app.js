@@ -13,6 +13,7 @@ const gotoMenu = require('./src/router/rMenu');
 const gotoRegister = require('./src/router/rRegister');
 const gotoLogin = require('./src/router/rLogin');
 const gotoDetail = require('./src/router/rDetail')
+const gotoMypage = require('./src/router/rMypage');
 
 // 건들지 ~
 // view engine setup
@@ -57,6 +58,7 @@ app.use('/moveMenu', gotoMenu);
 app.use('/moveRegister', gotoRegister)
 app.use('/moveLogin', gotoLogin);
 app.use('/moveDetail', gotoDetail);
+app.use('/moveMypage', gotoMypage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
