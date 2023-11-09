@@ -22,8 +22,19 @@
       <%=orderNumber %></span
     >
     <p>주문 담을 때 0개를 담거나, 이미 담겨져 있다면 주문내역에 포함 불가</p>
+    <p>공백넣고 검색하면 검색 초기화됨.</p>
+    <p>단일 구매시 메뉴이름(파란색) 클릭</p>
+    <p>검색 후 파란글씨 클릭을 단일 주문으로 정의, 검색 전 주문하기 누르면 장바구니씩 주문이 됨.</p>
+    <p>결제수단 선택 안하면 안됩니다.</p>
+
+
+    <form action="/moveMenu/search" method="POST">
+    <span>검색하기</span><input type="text" name="search" />
+    <button>검색</button>
+    </form>
+
     <form action="/moveMenu/orderOK" method="POST">
-      <button class="optionCSS">주문하기</button>
+      <button class="optionCSS">장바구니씩 주문하기</button>
     </form>
     <table class="menuTable">
       <thead>

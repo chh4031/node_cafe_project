@@ -10,6 +10,8 @@ const cMenu = async(req, res) => {
 
     req.session.selectOption = false;
     req.session.confirm = false;
+    req.session.searchInfo = "";
+
     // 여기까지
 
     ordercount = 0;
@@ -47,8 +49,9 @@ const cOrderOK = async(req, res) => {
     }else{
         ordercount += 1
     }
+    let menuList = undefined;
     if (req.session.loginInfo.loginId != undefined){
-        const menuList = await useDB.query('select * from 메뉴항목');
+            menuList = await useDB.query('select * from 메뉴항목');
         try{
             console.log("주문 테이블에 기본값(사용자정보) 존재(메뉴쪽)")
             const orderMax = await useDB.query(`
@@ -68,6 +71,7 @@ const cOrderOK = async(req, res) => {
         insert into 주문(주문번호, 고객_고객아이디, 주문날짜, 주문방식) values(?,?,?,?)`, [ordernum, req.session.loginInfo.loginId, today, "선택안함"])
 
         req.session.orderNum = ordernum
+        req.session.orderUseSearch = true;
 
         console.log("주문 테이블에 들어감(메뉴쪽)")
         res.render("pMenu",{
@@ -87,7 +91,13 @@ const cOrderOK = async(req, res) => {
 }
 
 const cOrder = async(req, res) => {
-    const menuList = await useDB.query('select * from 메뉴항목');
+    let menuList = undefined;
+    if(req.session.searchInfo == ""){
+        menuList = await useDB.query('select * from 메뉴항목');
+    }else{
+        menuList = await useDB.query(`
+    select * from 메뉴항목 where 이름 like "%${req.session.searchInfo}%"`)
+    }
     
     const { menuNumber, menuPrice, menuCount} = req.body;
     try{
@@ -179,7 +189,39 @@ const cSelect = async(req, res) => {
     }
 }
 
-module.exports = { cMenu, cOrder, cOrderOK, cDelete, cConfrim, cSelect } ;
+const cSearch = async(req, res) => {
+    const { search } = req.body
+
+    const menuSearch = await useDB.query(`
+    select * from 메뉴항목 where 이름 like "%${search}%"`)
+    // console.log(menuSearch)
+
+    req.session.searchInfo = search;
+
+    let check = false;
+    let orderList = undefined;
+    if(req.session.orderUseSearch == true){
+        check = true;
+        orderList = await useDB.query(`
+    select * from (주문내역 inner join 메뉴항목 on 주문내역.메뉴항목_항목번호 = 메뉴항목.항목번호) inner join 주문 on 주문내역.주문_주문번호 = 주문.주문번호 where 주문_주문번호 = ${req.session.orderNum}`)
+        // req.session.orderUseSearch = false;
+    }else{
+        check = false;
+        orderList = [[]]
+    }
+
+    return res.render("pMenu", {
+        menuInfo : menuSearch[0],
+        orderList : orderList[0],
+        sessionLoginName : req.session.loginInfo.loginName,
+        orderNumber : req.session.orderNum,
+        orderSelect : check,
+        selectOption : req.session.selectOption,
+        selectPay : "선택안함"
+    })
+}
+
+module.exports = { cMenu, cOrder, cOrderOK, cDelete, cConfrim, cSelect, cSearch } ;
 
 /*
 주문항목의 번호 들어가는 로직

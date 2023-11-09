@@ -10,8 +10,10 @@ router.post("/order", menuController.cOrder);
 
 router.post("/orderDelete", menuController.cDelete);
 
-router.get("/confirm", menuController.cConfrim)
+router.get("/confirm", menuController.cConfrim);
 
-router.post("/select", menuController.cSelect)
+router.post("/select", menuController.cSelect);
+
+router.post("/search", menuController.cSearch);
 
 module.exports = router;
