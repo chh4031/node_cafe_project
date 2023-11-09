@@ -6,7 +6,9 @@ let ordernum = 1000;
 let ordercount = 0;
 
 const cMenu = async(req, res) => {
+    // console.log(req.session.selectOption)
 
+    req.session.selectOption = false;
     req.session.confirm = false;
     // 여기까지
 
@@ -25,6 +27,9 @@ const cMenu = async(req, res) => {
             orderList : [],
             sessionLoginName : req.session.loginInfo.loginName,
             orderNumber : req.session.orderNum,
+            orderSelect : false,
+            selectOption : req.session.selectOption,
+            selectPay : "선택안함",
             orderSelect : false
         });
     }catch{
@@ -70,7 +75,9 @@ const cOrderOK = async(req, res) => {
             orderList : [],
             sessionLoginName : req.session.loginInfo.loginName,
             orderNumber : req.session.orderNum,
-            orderSelect : true
+            orderSelect : true,
+            selectPay : "선택안함",
+            selectOption : req.session.selectOption
         })
         ordernum += 1
     }else{
@@ -82,7 +89,7 @@ const cOrderOK = async(req, res) => {
 const cOrder = async(req, res) => {
     const menuList = await useDB.query('select * from 메뉴항목');
     
-    const { menuNumber, menuPrice, menuCount } = req.body;
+    const { menuNumber, menuPrice, menuCount} = req.body;
     try{
         if(menuCount != 0){
             const orderInput = await useDB.query('insert into 주문내역(주문_주문번호, 메뉴항목_항목번호, 총금액, 총수량) values(?,?,?,?)',[req.session.orderNum, menuNumber, menuPrice*menuCount, menuCount] )
@@ -104,7 +111,10 @@ const cOrder = async(req, res) => {
         orderList : orderList[0],
         sessionLoginName : req.session.loginInfo.loginName,
         orderNumber : req.session.orderNum,
-        orderSelect : true})
+        orderSelect : true,
+        selectPay : "선택안함",
+        selectOption : req.session.selectOption
+    })
 };
 
 const cDelete = async(req, res) => {
@@ -122,16 +132,54 @@ const cDelete = async(req, res) => {
         orderList : orderList[0],
         sessionLoginName : req.session.loginInfo.loginName,
         orderNumber : req.session.orderNum,
-        orderSelect : true
+        orderSelect : true,
+        selectPay : "선택안함",
+        selectOption : req.session.selectOption
     })
 }
 
 const cConfrim = async(req, res) =>{
     req.session.confirm = true
+    console.log(req.session.orderNum)
+    const updateOrder = await useDB.query(`
+    update 주문 set 주문방식 = "${req.session.selectPay}" where 주문번호 = "${req.session.orderNum}"`)
     return res.redirect("/")
 }
 
-module.exports = { cMenu, cOrder, cOrderOK, cDelete, cConfrim} ;
+const cSelect = async(req, res) => {
+    const menuList = await useDB.query('select * from 메뉴항목');
+    const orderList = await useDB.query(`
+    select * from (주문내역 inner join 메뉴항목 on 주문내역.메뉴항목_항목번호 = 메뉴항목.항목번호) inner join 주문 on 주문내역.주문_주문번호 = 주문.주문번호 where 주문_주문번호 = ${req.session.orderNum}`)
+
+    const { selected } = req.body
+    if (selected == "선택안함"){
+        req.session.selectOption = false;
+        return res.render("pMenu", {
+            menuInfo : menuList[0],
+            orderList : orderList[0],
+            sessionLoginName : req.session.loginInfo.loginName,
+            orderNumber : req.session.orderNum,
+            orderSelect : false,
+            selectOption : req.session.selectOption,
+            selectPay : selected
+        })
+    }else{
+        req.session.selectOption = true;
+        console.log(selected+"이다")
+        req.session.selectPay = selected;
+        return res.render("pMenu", {
+            menuInfo : menuList[0],
+            orderList : orderList[0],
+            sessionLoginName : req.session.loginInfo.loginName,
+            orderNumber : req.session.orderNum,
+            orderSelect : true,
+            selectOption : req.session.selectOption,
+            selectPay : selected
+        })
+    }
+}
+
+module.exports = { cMenu, cOrder, cOrderOK, cDelete, cConfrim, cSelect } ;
 
 /*
 주문항목의 번호 들어가는 로직

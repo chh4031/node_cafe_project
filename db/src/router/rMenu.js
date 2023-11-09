@@ -12,4 +12,6 @@ router.post("/orderDelete", menuController.cDelete);
 
 router.get("/confirm", menuController.cConfrim)
 
+router.post("/select", menuController.cSelect)
+
 module.exports = router;

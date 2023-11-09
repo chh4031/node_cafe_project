@@ -9,7 +9,7 @@
     <script>
       const Datamove = (data) => {
         const datajson = JSON.stringify(data);
-        window.location.href = '/moveDetail?data=' + datajson
+        window.location.href = "/moveDetail?data=" + datajson;
       };
     </script>
   </head>
@@ -48,7 +48,10 @@
                 value="<%=menuInfo[i].항목번호%>"
               />
             </td>
-            <td class="menuname" onclick="Datamove( { menuName :'<%=menuInfo[i].이름 %>' , menuId : '<%=menuInfo[i].항목번호 %>'})">
+            <td
+              class="menuname"
+              onclick="Datamove( { menuName :'<%=menuInfo[i].이름 %>' , menuId : '<%=menuInfo[i].항목번호 %>'})"
+            >
               <%=menuInfo[i].이름%>
               <input
                 type="hidden"
@@ -103,18 +106,22 @@
         <% for(let i = 0; i < orderList.length; i++) { %>
         <form action="/moveMenu/orderDelete" method="POST">
           <tr>
-            <td><%=orderList[i].주문_주문번호 %>
+            <td>
+              <%=orderList[i].주문_주문번호 %>
               <input
-              type="hidden"
-              name="DeleteOrderNum"
-              value="<%=orderList[i].주문_주문번호%>"
-            /></td>
-            <td><%=orderList[i].메뉴항목_항목번호 %>
+                type="hidden"
+                name="DeleteOrderNum"
+                value="<%=orderList[i].주문_주문번호%>"
+              />
+            </td>
+            <td>
+              <%=orderList[i].메뉴항목_항목번호 %>
               <input
-              type="hidden"
-              name="DeleteMenuNum"
-              value="<%=orderList[i].메뉴항목_항목번호 %>"
-            /></td>
+                type="hidden"
+                name="DeleteMenuNum"
+                value="<%=orderList[i].메뉴항목_항목번호 %>"
+              />
+            </td>
             <td><%=orderList[i].총금액 %></td>
             <td><%=orderList[i].총수량 %></td>
             <td><%=orderList[i].이름 %></td>
@@ -126,6 +133,27 @@
         <% } %>
       </tbody>
     </table>
-    <button onclick="location.href='/moveMenu/confirm'" class="optionCSS">구매확정</button>
+    <% if(selectOption == false) { %>
+    <button onclick="location.href='/moveMenu/confirm'" class="confirm_off">
+      구매확정
+    </button>
+    <% }else{ %>
+    <button onclick="location.href='/moveMenu/confirm'" class="confirm_on">
+      구매확정
+    </button>
+    <% } %>
+    <form action="/moveMenu/select" method="POST">
+      <%if (orderSelect == true) { %>
+      <button class="leftcss" type="submit">선택하기</button>
+      <% }else{ %>
+      <span class="leftcss">선택불가</span>
+      <% } %>
+      <select name="selected" class="leftcss">
+        <option value="선택안함">선택안함</option>
+        <option value="카드">카드</option>
+        <option value="현금">현금</option>
+      </select>
+    </form>
+    <span id="selected">선택한 결제수단 : <%=selectPay%></span>
   </body>
 </html>
