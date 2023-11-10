@@ -8,17 +8,18 @@ const cMain = async(req, res) => {
     console.log('메인페이지 완료')
 
     // 주문내역 체크 코드(모든 페이지에서 써야함.)
-    try{
-        if(req.session.confirm == true){
-            console.log("주문내역 유지")
-        }else{
-            const lastOrderDelete = await useDB.query(`
-                delete from 주문내역 where 주문_주문번호 = ${req.session.orderNum}`)
-            console.log("도중에 중단한거라서 주문내역에 넣은거 삭제시키기")
-        }
-    }catch{
-        console.log("처음 서버 켰음")
-    }
+    // 페이지마다 작동 로직 복잡해서 비활성화
+    // try{
+    //     if(req.session.confirm == true){
+    //         console.log("주문내역 유지")
+    //     }else{
+    //         const lastOrderDelete = await useDB.query(`
+    //             delete from 주문내역 where 주문_주문번호 = ${req.session.orderNum}`)
+    //         console.log("도중에 중단한거라서 주문내역에 넣은거 삭제시키기")
+    //     }
+    // }catch{
+    //     console.log("처음 서버 켰음")
+    // }
 
     req.session.confirm = false;
 

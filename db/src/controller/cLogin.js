@@ -3,15 +3,16 @@ const useDB = require("../../middleware/db");
 const cLogin = async(req, res) => {
 
     // 주문내역 체크 코드(모든 페이지에서 써야함.)
-    if(req.session.confirm == true){
-        console.log("주문내역 유지")
-    }else{
-        const lastOrderDelete = await useDB.query(`
-            delete from 주문내역 where 주문_주문번호 = ${req.session.orderNum}`)
-        console.log("도중에 중단한거라서 주문내역에 넣은거 삭제시키기")
-    }
+    // 페이지마다 작동 로직 복잡해서 비활성화
+    // if(req.session.confirm == true){
+    //     console.log("주문내역 유지")
+    // }else{
+    //     const lastOrderDelete = await useDB.query(`
+    //         delete from 주문내역 where 주문_주문번호 = ${req.session.orderNum}`)
+    //     console.log("도중에 중단한거라서 주문내역에 넣은거 삭제시키기")
+    // }
 
-    req.session.confirm = false;
+    // req.session.confirm = false;
     // 여기까지
 
     console.log('로그인 페이지 완료')
