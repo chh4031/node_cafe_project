@@ -13,23 +13,49 @@
     <p>고객전화번호 : <%=memberPhone %></p>
     <p>고객주소 : <%=memberAddress %></p>
     <h1>주문내역</h1>
-    <table>
+    <p>정렬기준은 주문번호이다.</p>
+    <table class="MypageTable">
         <thead>
             <tr>
                 <th>주문번호</th>
                 <th>주문날짜</th>
                 <th>주문방식</th>
-                <th>주문번호</th>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
                 <th>주문고객</th>
                 <th>총금액</th>
                 <th>총수량</th>
             </tr>
         </thead>
         <tbody>
+            <% for(let i = 0; i < orderList.length; i++) { %>
             <tr>
                 <td>
+                    <%=orderList[i].주문번호 %>
+                </td>
+                <td>
+                    <%=orderList[i].주문날짜 %>
+                </td>
+                <td>
+                    <%=orderList[i].주문방식 %>
+                </td>
+                <td>
+                    <%=orderList[i].항목번호 %>
+                </td>
+                <td>
+                    <%=orderList[i].이름 %>
+                </td>
+                <td>
+                    <%=orderList[i].고객_고객아이디 %>
+                </td>
+                <td>
+                    <%=orderList[i].총금액 %>
+                </td>
+                <td>
+                    <%=orderList[i].총수량 %>
                 </td>
             </tr>
+            <% } %>
         </tbody>
     </table>
 </body>
