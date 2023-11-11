@@ -32,7 +32,45 @@ const busketOption = async(req, res) => {
     // pay = 1 주문하기, pay = 0 취소하기
     // 선택한 버튼의 값이 아니면 보통 undefiend로 들어와짐
 
-    const {option, pay} = req.body
+    // menunum = 항목번호
+    // count = 현재 수량
+
+    console.log("장바구니에서 선택부분 진입")
+
+    const {option, pay, menunum, count} = req.body
+
+    if(option == "1"){
+    // 장바구니 리스트에서 수량 변경하는 경우
+
+        // 메뉴항목에서 우선 메뉴가격부터 가져옴. (가격 * 갯수) 계산 목적
+        const menuPrice = await useDB.query(`
+        select 메뉴가격 from 메뉴항목 where 항목번호 = "${Number(menunum)}"`)
+
+        // 장바구니에서 메뉴 수량 수정과 그에 따른 총금액 수정
+        try{
+            const countChange = await useDB.query(`
+            update 장바구니 set 수량 = "${Number(count)}", 수량금액 = "${Number(count * menuPrice[0][0].메뉴가격)}" where 메뉴항목_항목번호 = "${Number(menunum)}"`)
+
+            console.log("장바구니에서 해당 메뉴 수정 성공")
+
+            return res.redirect("/moveBusket")
+        }catch{
+
+            console.log("장바구니 수량 변경 과정에서 문제 발생")
+
+        }
+        
+
+    }else if(option == "0"){
+    // 장바구니 리스트에서 삭제하는 경우
+
+        const menuDelete = await useDB.query(`
+        delete from 장바구니 where 메뉴항목_항목번호 = "${Number(menunum)}"`)
+
+        console.log("장바구니에서 해당 메뉴 삭제 성공")
+
+        return res.redirect("/moveBusket")
+    }
 
     return res.render("Busket")
 }

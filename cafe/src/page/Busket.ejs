@@ -23,31 +23,39 @@
             </tr>
         </thead>
         <tbody>
-            <form action="/moveBusket/order" method="POST">
-                <% for(let i = 0; i < busketList.length; i++) { %>
-                <tr>
-                    <td><%=busketList[i].항목번호 %></td>
-                    <td><%=busketList[i].메뉴이름 %></td>
-                    <td><%=busketList[i].메뉴분류 %></td>
-                    <td><%=busketList[i].수량 %></td>
-                    <td><%=busketList[i].수량금액 %></td>
-                    <td>
-                        <button type="submit" name="option" value="1">수량변경</button>
-                        <button type="submit" name="option" value="0">삭제</button>
-                    </td>
-                </tr>
+            <% for(let i = 0; i < busketList.length; i++) { %>
+                <form action="/moveBusket/order" method="POST">
+                    <tr>
+                        <td><%=busketList[i].항목번호 %></td>
+
+                        <input type="hidden" name="menunum" value="<%=busketList[i].항목번호 %>"/>
+
+                        <td><%=busketList[i].메뉴이름 %></td>
+                        <td><%=busketList[i].메뉴분류 %></td>
+
+                        <td><input type="number" name="count" value="<%=busketList[i].수량 %>" min="1"/></td>
+
+                        <td><%=busketList[i].수량금액 %></td>
+
+                        <td>
+                            <button type="submit" name="option" value="1">수량변경</button>
+                            <button type="submit" name="option" value="0">삭제</button>
+                        </td>
+                    </tr>
+                </form> 
             <% } %>
         </tbody>
     </table>
 
+    
     <span>결제수단 선택</span>
         <select name="selected">
             <option value="카드">카드</option>
             <option value="현금">현금</option>
         </select>
 
-        <button name="pay" value="1">주문하기</button>
-        <button name="pay" value="0">취소하기</button>
-    </form> 
+    <button name="pay" value="1">주문하기</button>
+    <button name="pay" value="0">취소하기</button>
+
 </body>
 </html>
