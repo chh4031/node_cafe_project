@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Menu.css" />
+    <link rel="stylesheet" href="../Menu.css" />
+    <title>메뉴</title>
+</head>
+<body>
+    <h1>메뉴목록</h1>
+    <h2>현재 접속 유저 : [<%=uid %>]</h2>
+    <form>
+    <input type="text" name="search"/>
+    <button type="submit">검색</button>
+    </form>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>메뉴가격</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < menuList.length; i++) { %>
+            <tr>
+                <td><%=menuList[i].항목번호 %></td>
+                <td onclick="location.href='/moveDetail/<%=menuList[i].항목번호 %>'"><%=menuList[i].메뉴이름 %></td>
+                <td><%=menuList[i].메뉴가격 %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

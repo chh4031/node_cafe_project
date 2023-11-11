@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Detail.css" />
+    <link rel="stylesheet" href="../Detail.css" />
+    <title>상세보기</title>
+</head>
+<body>
+    <form action="/moveDetail/order" method="POST">
+    <h1>상세보기</h1>
+    <h2>현재 접속 유저 : [<%=uid %>]</h2>
+    <h2>선택한 메뉴 : [<%=detailMenu.메뉴이름 %>]</h2>
+    <h2>항목번호 : [<%=detailMenu.항목번호 %>]</h2>
+
+    <input type="hidden" name="menunum" value="<%=detailMenu.항목번호 %>"/>
+
+    <p>메뉴가격 : <%=detailMenu.메뉴가격 %></p>
+
+    <input type="hidden" name="menuprice" value="<%=detailMenu.메뉴가격 %>"/>
+
+    <p>메뉴분류 : <%=detailMenu.메뉴분류 %></p>
+    <p>들어가는 재료</p>
+
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>재료이름</th>
+                <th>들어가는 재료량</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < itemInfo.length; i++) { %>
+            <tr>
+                <td><%=itemInfo[i].재료_재료이름 %></td>
+                <td><%=itemInfo[i].필요양 %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+        <span>수량선택</span>
+        <input type="number" name="count" value="1" min="1" />
+
+        <span>결제수단 선택</span>
+        <select name="selected">
+            <option value="카드">카드</option>
+            <option value="현금">현금</option>
+        </select>
+
+        <button name="pay" value="1">바로구매</button>
+        <button name="pay" value="0">장바구니 담기</button>
+    </form>
+</body>
+</html>

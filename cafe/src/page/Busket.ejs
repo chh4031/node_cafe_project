@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Busket.css" />
+    <link rel="stylesheet" href="../Busket.css" />
+    <title>장바구니</title>
+</head>
+<body>
+    <h1>장바구니</h1>
+    <h2>현재 접속 유저 : [<%=uid %>]</h2>
+    <h1>장바구니 내역 확인</h1>
+
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>메뉴분류</th>
+                <th>메뉴수량</th>
+                <th>메뉴수량금액</th>
+                <th>수정여부</th>
+            </tr>
+        </thead>
+        <tbody>
+            <form action="/moveBusket/order" method="POST">
+                <% for(let i = 0; i < busketList.length; i++) { %>
+                <tr>
+                    <td><%=busketList[i].항목번호 %></td>
+                    <td><%=busketList[i].메뉴이름 %></td>
+                    <td><%=busketList[i].메뉴분류 %></td>
+                    <td><%=busketList[i].수량 %></td>
+                    <td><%=busketList[i].수량금액 %></td>
+                    <td>
+                        <button type="submit" name="option" value="1">수량변경</button>
+                        <button type="submit" name="option" value="0">삭제</button>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <span>결제수단 선택</span>
+        <select name="selected">
+            <option value="카드">카드</option>
+            <option value="현금">현금</option>
+        </select>
+
+        <button name="pay" value="1">주문하기</button>
+        <button name="pay" value="0">취소하기</button>
+    </form> 
+</body>
+</html>
