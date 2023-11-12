@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Mypage.css" />
+    <link rel="stylesheet" href="../Mypage.css" />
+    <title>마이페이지</title>
+</head>
+<body>
+    <h1>마이페이지</h1>
+    <h2>현재 접속 유저 : [<%=uid %>]</h2>
+    <h2>주문내역[주문번호 구분]</h2>
+
+    <% for(let j = 0; j < orderNum.length; j++) { %>
+    <h3>주문번호 : <%=orderNum[j].주문번호 %></h3>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴이름</th>
+                <th>메뉴가격</th>
+                <th>메뉴분류</th>
+                <th>주문자아이디</th>
+                <th>수량</th>
+                <th>수량금액</th>
+                <th>주문날짜</th>
+                <th>주문방식</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < orderList.length; i++) { %>
+            <% if (orderNum[j].주문번호 == orderList[i].주문번호) { %>
+            <tr>
+                <td><%=orderList[i].메뉴이름 %></td>
+                <td><%=orderList[i].메뉴가격 %></td>
+                <td><%=orderList[i].메뉴분류 %></td>
+                <td><%=orderList[i].고객_아이디 %></td>
+                <td><%=orderList[i].수량 %></td>
+                <td><%=orderList[i].수량금액 %></td>
+                <td><%=orderList[i].주문날짜 %></td>
+                <td><%=orderList[i].주문방식 %></td>
+            </tr>
+            <% } %>
+            <% } %>
+        </tbody>
+    </table>
+    <span>총금액 : <%=orderPrice[j].총금액 %> 원</span>
+    <% } %>
+</body>
+</html>
