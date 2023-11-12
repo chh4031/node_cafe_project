@@ -27,6 +27,11 @@ const detailView = async(req, res) => {
 // 주문방식 선택하기
 const order = async(req, res) =>{
 
+    // 비회원의 주문 못하게 막기
+    if(req.session.userid == undefined){
+        return res.send('<script type = "text/javascript">alert("로그인부터하세요!"); location.href="/";</script>')
+    }
+
     // count = 수량, 
     // selected = 주문방식 선택유무,1
     // pay = 구매방식

@@ -40,9 +40,9 @@ const busketOption = async(req, res) => {
 
     console.log("장바구니에서 선택부분 진입")
 
-    const {option, menunum, count} = req.body
+    const {option, menunum, count, pay} = req.body
 
-    if(option == "1"){
+    if(option == "1" && pay == undefined){
     // 장바구니 리스트에서 수량 변경하는 경우
 
         // 메뉴항목에서 우선 메뉴가격부터 가져옴. (가격 * 갯수) 계산 목적
@@ -64,7 +64,7 @@ const busketOption = async(req, res) => {
         }
         
 
-    }else if(option == "0"){
+    }else if(option == "0" && pay == undefined){
     // 장바구니 리스트에서 삭제하는 경우
 
         const menuDelete = await useDB.query(`
@@ -84,7 +84,7 @@ const busketChecker = async(req, res) => {
     // pay = 1 주문하기
     // pay = 0 주문취소(장바구니 내용들 삭제)
     // selected = 결제수단 
-    const { pay, selected } = req.body
+    const { option, pay, selected } = req.body
 
     // 현재 사용자의 장바구니 번호 가져오기
     const bringBusketId = await useDB.query(`
@@ -101,13 +101,14 @@ const busketChecker = async(req, res) => {
     let totalPrice = 0;
 
     // 총금액 계산
-    for(i = 0; i < bringBusketPrice.length; i++){
+    for(i = 0; i < bringBusketPrice[0].length; i++){
         totalPrice += bringBusketPrice[0][i].수량금액
+        console.log(totalPrice)
     }
 
     console.log("총금액 계산완료")
 
-    if(pay == "1"){
+    if(pay == "1" && option == undefined){
         // 장바구니 내용들 주문내역으로 옮기고 장바구니 안에 것들 삭제
 
         // 주문 테이블에 주문자 정보 우선 저장
@@ -130,7 +131,7 @@ const busketChecker = async(req, res) => {
 
         // 현재 장바구니 테이블의 현재 사용자의 장바구니 항목 갯수 계산
         // 주문내역에 넣기
-        for(i = 0; i < bringBusketPrice.length; i++){
+        for(i = 0; i < bringBusketPrice[0].length; i++){
             const orderListAdd = await useDB.query(`
             insert into 주문내역(주문_주문번호, 메뉴항목_항목번호, 수량금액, 수량) values(?,?,?,?)`, [orderUser[0][0].maxorder, userBusket[0][i].메뉴항목_항목번호, userBusket[0][i].수량금액, userBusket[0][i].수량])
         }
@@ -144,7 +145,7 @@ const busketChecker = async(req, res) => {
         console.log("원래 장바구니에 있던거 초기화")
 
         return res.redirect("/moveBusket")
-    }else{
+    }else if(pay == "0" && option == undefined){
         // 주문취소라서 그냥 장바구니 내용들 삭제
 
         const deleteBusket = await useDB.query(`

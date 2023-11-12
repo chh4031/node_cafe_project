@@ -7,14 +7,18 @@
 <body>
     <h1>데이터베이스 커피 전문점</h1>
     <h2>현재 접속 유저 : [<%=uid %>]</h2>
+    <%if (uid == undefined) { %>
     <button onclick="location.href='/moveLogin/register'">회원가입</button>
+    <% } %>
     <%if (uid == undefined) { %>
     <button onclick="location.href='/moveLogin'">로그인</button>
     <% }else{ %>
     <button onclick="location.href='/moveLogin/logout'">로그아웃</button>
     <% } %>
     <button onclick="location.href='/moveMenu'">메뉴목록</button>
+    <%if (uid != undefined) { %>
     <button onclick="location.href='/moveBusket'">장바구니</button>
-    <button>마이페이지</button>
+    <button onclick="location.href='/moveMypage'">마이페이지</button>
+    <% } %>
 </body>
 </html>
