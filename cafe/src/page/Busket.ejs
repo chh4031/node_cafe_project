@@ -47,15 +47,15 @@
         </tbody>
     </table>
 
-    
-    <span>결제수단 선택</span>
-        <select name="selected">
-            <option value="카드">카드</option>
-            <option value="현금">현금</option>
-        </select>
+    <form action="/moveBusket/checker" method="POST">
+        <span>결제수단 선택</span>
+            <select name="selected">
+                <option value="카드">카드</option>
+                <option value="현금">현금</option>
+            </select>
 
-    <button name="pay" value="1">주문하기</button>
-    <button name="pay" value="0">취소하기</button>
-
+        <button name="pay" value="1">주문하기</button>
+        <button name="pay" value="0">취소하기</button>
+    </form>
 </body>
 </html>
