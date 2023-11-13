@@ -39,6 +39,7 @@ const gotoMenu = require('./src/router/menuRouter'); // 메뉴화면
 const gotoDetial = require('./src/router/detailRouter'); // 상세보기 화면
 const gotoBusket = require('./src/router/busketRouter'); // 장바구니 화면
 const gotoMypage = require('./src/router/mypageRouter'); // 마이페이지 화면
+const gotoAdmin = require('./src/router/adminRouter'); // 관리자 화면
 
 
 // view engine setup, 프론트 부분 경로 설정
@@ -59,6 +60,7 @@ app.use('/moveMenu', gotoMenu); // 메뉴화면
 app.use('/moveDetail', gotoDetial); // 상세보기 화면
 app.use('/moveBusket', gotoBusket); // 장바구니 화면
 app.use('/moveMypage', gotoMypage); // 마이페이지 화면
+app.use('/moveAdmin', gotoAdmin); // 관리자 화면
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

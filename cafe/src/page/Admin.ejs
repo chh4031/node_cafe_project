@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Admin.css" />
+    <link rel="stylesheet" href="../Admin.css" />
+    <title>관리자 페이지</title>
+</head>
+<body>
+    <h1>관리자 전용 페이지</h1>
+    <h2>현재 접속 유저 : [<%=uid %>]</h2>
+
+    <h2>현재 재료 재고량 확인</h2>
+    
+    <table class="menuTable">
+        <thad>
+            <tr>
+                <th>재료이름</th>
+                <th>현재 재고량</th>
+            </tr>
+        </thad>
+        <tbody>
+            <% for(i = 0; i < itemCount.length; i++) { %>
+            <tr>
+                <td><%=itemCount[i].재료이름 %></td>
+                <td><%=itemCount[i].재료량 %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <h2>재료 주문하기</h2>
+
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>공급업체번호</th>
+                <th>공급업체이름</th>
+                <th>공급업체주소</th>
+                <th>공급업체재료이름</th>
+                <th>공급업체주문가격</th>
+                <th>공급업체주문양</th>
+                <th>공급업체납품일자</th>
+                <th>공급업체주문단위</th>
+                <th>주문하기</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < companyList.length; i++) { %>
+            <form action="/moveAdmin/order" method="POST">
+                <tr>
+                    <td><%=companyList[i].공급업체번호 %></td>
+                    <input type="hidden" name="companynum" value="<%=companyList[i].공급업체번호 %>"/>
+                    <td><%=companyList[i].공급업체이름 %></td>
+                    <td><%=companyList[i].공급업체주소 %></td>
+                    <td><%=companyList[i].재료_재료이름 %></td>
+                    <input type="hidden" name="itemname" value="<%=companyList[i].재료_재료이름 %>"/>
+                    <td><%=companyList[i].주문가격 %></td>
+                    <td><%=companyList[i].주문양 %></td>
+                    <input type="hidden" name="itemcount" value="<%=companyList[i].주문양 %>"/>
+                    <td><%=companyList[i].납품날짜 %></td>
+                    <td><%=companyList[i].주문단위 %></td>
+                    <td><button type="submit">주문하기</button></td>
+                </tr>
+            </form>
+            <% } %>
+        </tbody>
+    </table>
+    
+</body>
+</html>
