@@ -111,6 +111,10 @@ const busketChecker = async(req, res) => {
     if(pay == "1" && option == undefined){
         // 장바구니 내용들 주문내역으로 옮기고 장바구니 안에 것들 삭제
 
+        // bringBusketPrice가 자주 쓰일거임
+        // 이거 역할은 가격만 뽑아오는건데 어쩌피 장바구니 안에
+        // 리스트 다 뽑아올 수 있어서 걍 이걸로씀
+
         // 주문 테이블에 주문자 정보 우선 저장
         const orderAdd = await useDB.query(`
         insert into 주문(고객_아이디, 주문날짜, 주문방식, 총금액) values(?,?,?,?)`, [req.session.userid, today, selected, totalPrice ])
@@ -137,6 +141,24 @@ const busketChecker = async(req, res) => {
         }
 
         console.log("주문내역에 장바구니의 내용들 넣기 성공")
+
+        // 장바구니에 있는 제품들에 대한 필요량 가져오기
+        // 우선 현재 사용자 장바구니에서 메뉴 항목들 가져옴
+        // userBusket에 관련 정보들이 담겨있음.
+
+        // 현재 장바구니의 메뉴들의 필요량 가져오기
+        for(let i = 0; i < bringBusketPrice[0].length; i++){
+            // 우선 필요량 부터 가져옴
+            const needItem = await useDB.query(`
+            select 재료_재료이름, 필요양 from 레시피 where 메뉴항목_항목번호 = "${userBusket[0][i].메뉴항목_항목번호}"`)
+
+            // 가져온 필요량을 바탕으로 재료에서 양을 줄임
+            const reduceItem = await useDB.query(`
+                update 재료 set 재료량 = 재료.재료량 - "${Number(needItem[0][i].필요양 * userBusket[0][i].수량)}" where 재료이름 = "${needItem[0][i].재료_재료이름}"`)
+            }
+
+         // 재고량 줄일때 주의! 아직 재고량이 필요양 보다 작을때 생기는 문제에 대한 예외 처리는 없음!
+        console.log("장바구니에 있는 재료들 재료량 줄이기 성공")
 
         // 원래 장바구니에 있는거는 삭제
         const deleteBusket = await useDB.query(`

@@ -58,7 +58,22 @@ const order = async(req, res) =>{
             // 주문내역 테이블에 주문정보 넣기
             const orderListAdd = await useDB.query(`
             insert into 주문내역(주문_주문번호, 메뉴항목_항목번호, 수량금액, 수량) values(?,?,?,?)`, [orderUser[0][0].maxorder, menunum, menuprice * count, count])
-    
+
+            // 현재 주문한 항목에 대한 필요 재료량 가져오기
+            const needItem = await useDB.query(`
+            select 재료_재료이름, 필요양 from 레시피 where 메뉴항목_항목번호 = "${Number(menunum)}"`)
+
+            console.log(needItem[0])
+
+            // 주문한 항목에 대한 재료의 양을 줄이기(총 재료량에서 줄이기)
+            for(let i = 0; i < needItem[0].length; i++){
+                const reduceItem = await useDB.query(`
+                update 재료 set 재료량 = 재료.재료량 - "${Number(needItem[0][i].필요양 * count)}" where 재료이름 = "${needItem[0][i].재료_재료이름}"`)
+            }
+            
+            // 재고량 줄일때 주의! 아직 재고량이 필요양 보다 작을때 생기는 문제에 대한 예외 처리는 없음!
+
+            console.log("(바로결제), 재료량 줄이기 성공")
             console.log("(바로결제), 주문내역 저장 성공")
     
         }else{
