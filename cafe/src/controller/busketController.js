@@ -63,7 +63,6 @@ const busketOption = async(req, res) => {
 
         }
         
-
     }else if(option == "0" && pay == undefined){
     // 장바구니 리스트에서 삭제하는 경우
 

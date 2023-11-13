@@ -20,5 +20,8 @@
     <button onclick="location.href='/moveBusket'">장바구니</button>
     <button onclick="location.href='/moveMypage'">마이페이지</button>
     <% } %>
+    <%if (uid == "admin") { %>
+    <button onclick="location.href='/moveAdmin'">관리자 페이지</button>
+    <% } %>
 </body>
 </html>
