@@ -8,9 +8,19 @@ const menuView = async(req, res) => {
     const menuList = await useDB.query(`
     select * from 메뉴항목`)
 
+    // 메뉴항목에서 대표 메뉴 보여주기
+    const mainMenu = await useDB.query(`
+    select * from 메뉴항목 where 특별메뉴 = "대표"`)
+
+    // 메뉴항목에서 추천 메뉴 보여주기
+    const goodMenu = await useDB.query(`
+    select * from 메뉴항목 where 특별메뉴 = "추천"`)
+
     return res.render('Menu', {
         uid : req.session.userid,
-        menuList : menuList[0]
+        menuList : menuList[0],
+        mainMenu : mainMenu[0],
+        goodMenu : goodMenu[0]
     })
 }
 

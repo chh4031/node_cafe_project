@@ -10,6 +10,53 @@
     <h1>메뉴목록</h1>
     <h2>현재 접속 유저 : [<%=uid %>]</h2>
 
+    <h1>대표메뉴</h1>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>메뉴가격</th>
+                <th>특별메뉴</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < mainMenu.length; i++) { %>
+            <tr>
+                <td><%=mainMenu[i].항목번호 %></td>
+                <td onclick="location.href='/moveDetail/<%=menuList[i].항목번호 %>'"><%=mainMenu[i].메뉴이름 %></td>
+                <td><%=mainMenu[i].메뉴가격 %></td>
+                <td><%=mainMenu[i].특별메뉴 %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <h1>추천메뉴</h1>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>메뉴가격</th>
+                <th>특별메뉴</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < goodMenu.length; i++) { %>
+            <tr>
+                <td><%=goodMenu[i].항목번호 %></td>
+                <td onclick="location.href='/moveDetail/<%=menuList[i].항목번호 %>'"><%=goodMenu[i].메뉴이름 %></td>
+                <td><%=goodMenu[i].메뉴가격 %></td>
+                <td><%=goodMenu[i].특별메뉴 %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+
+    <h1>매뉴리스트</h1>
+
     <form action="/moveMenu/search" method="POST">
         <input type="text" name="search"/>
         <button type="submit">검색</button>

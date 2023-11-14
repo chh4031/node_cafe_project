@@ -66,6 +66,34 @@
             <% } %>
         </tbody>
     </table>
+
+    <h1>추천메뉴변경하기</h1>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>메뉴가격</th>
+                <th>특별메뉴</th>
+                <th>수정여부</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < mainMenu.length; i++) { %>
+        <form action="/moveAdmin/good" method="POST">
+            <tr>
+                <td><%=mainMenu[i].항목번호 %></td>
+                <input type="hidden" name="menunum" value="<%=mainMenu[i].항목번호 %>"/>
+                <td><%=mainMenu[i].메뉴이름 %></td>
+                <td><%=mainMenu[i].메뉴가격 %></td>
+                <td><%=mainMenu[i].특별메뉴 %></td>
+                <td><input type="text" name="goodmenu" value="<%=mainMenu[i].특별메뉴 %>"/>
+                <button type="submit">수정하기</button></td>
+            </tr>
+        </form>
+            <% } %>
+        </tbody>
+    </table>
     
 </body>
 </html>
