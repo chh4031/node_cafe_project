@@ -24,21 +24,6 @@ const adminView = async(req, res) => {
     const mainMenu = await useDB.query(`
     select * from 메뉴항목`)
 
-    // // 추천메뉴의 재료항목들 가져오기
-    // const goodMenu = await useDB.query(`
-    // select * from 메뉴항목 left outer join 레시피 on 메뉴항목.항목번호 = 레시피.메뉴항목_항목번호 where 메뉴항목.특별메뉴 = "추천"`)
-
-    // // 추천 매뉴의 재료파악 하는중
-    // for(let i = 0; i < goodMenu.length; i++){
-    //     console.log(goodMenu[0][i].재료_재료이름)
-
-    //     // 추천메뉴의 재료들 중에서 재고수량이 30 * 사용량 가지게 함
-    //     const itemCount = await useDB.query(`
-    //     select 재료량 from 재료 where 재료이름 = "${goodMenu[0][i]}"`)
-
-    //     console.log(itemCount[0])
-    // }
-
     return res.render("Admin", {
         uid : req.session.userid,
         companyList : companyList[0],
@@ -61,6 +46,7 @@ const companyOrder = async(req, res) => {
     return res.redirect("/moveAdmin");
 }
 
+// 특별메뉴에 설정하기
 const goodMenu = async(req, res) =>{
     const {menunum, goodmenu} = req.body
 
