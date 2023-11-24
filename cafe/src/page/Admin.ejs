@@ -94,6 +94,30 @@
             <% } %>
         </tbody>
     </table>
+
+    <h1>월별베스트메뉴보기</h1>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>년월</th>
+                <th>판매수량</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < mainMenu.length; i++) { %>
+        <form action="/moveAdmin/good" method="POST">
+            <tr>
+                <td><%=mainMenu[i].항목번호 %></td>
+                <td><%=mainMenu[i].메뉴이름 %></td>
+                <td><%=mainMenu[i].메뉴가격 %></td>
+                <td><%=mainMenu[i].특별메뉴 %></td>
+            </tr>
+        </form>
+            <% } %>
+        </tbody>
+    </table>
     
 </body>
 </html>

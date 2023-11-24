@@ -16,11 +16,33 @@ const menuView = async(req, res) => {
     const goodMenu = await useDB.query(`
     select * from 메뉴항목 where 특별메뉴 = "추천"`)
 
+    // 베스트메뉴 추출하기
+    for(let i = 0; menuList.length; i++){
+        try{
+            let menuNum = menuList[0][i].항목번호
+            const bestMenu = await useDB.query(`
+            select SUM(수량) as ccc from 주문내역 where 메뉴항목_항목번호 = "${Number(menuList[0][i].항목번호)}"`)
+            console.log(bestMenu[0][0].ccc)
+            
+            const addCount = await useDB.query(`
+            update 메뉴항목 set 팔린수량 = "${Number(bestMenu[0][0].ccc)}" where 항목번호 = "${Number(menuNum)}"`)
+        }catch{
+            console.log("더이상 존재 X")
+            break;
+        }
+    }
+
+    // 베스트 메뉴 뽑기
+        const bestView = await useDB.query(`
+        select * from 메뉴항목 order by 팔린수량 desc `)
+        console.log(bestView)
+
     return res.render('Menu', {
         uid : req.session.userid,
         menuList : menuList[0],
         mainMenu : mainMenu[0],
-        goodMenu : goodMenu[0]
+        goodMenu : goodMenu[0],
+        bestMenu : bestView[0]
     })
 }
 

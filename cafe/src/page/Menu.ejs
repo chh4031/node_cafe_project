@@ -10,6 +10,30 @@
     <h1>메뉴목록</h1>
     <h2>현재 접속 유저 : [<%=uid %>]</h2>
 
+    <h1>베스트메뉴</h1>
+    <table class="menuTable">
+        <thead>
+            <tr>
+                <th>메뉴번호</th>
+                <th>메뉴이름</th>
+                <th>메뉴가격</th>
+                <th>순위</th>
+                <th>총팔린횟수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < 2; i++) { %>
+            <tr>
+                <td><%=bestMenu[i].항목번호 %></td>
+                <td onclick="location.href='/moveDetail/<%=menuList[i].항목번호 %>'"><%=bestMenu[i].메뉴이름 %></td>
+                <td><%=bestMenu[i].메뉴가격 %></td>
+                <td><%=i+1%></td>
+                <td><%=bestMenu[i].팔린수량 %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
     <h1>대표메뉴</h1>
     <table class="menuTable">
         <thead>

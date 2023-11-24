@@ -24,6 +24,27 @@ const adminView = async(req, res) => {
     const mainMenu = await useDB.query(`
     select * from 메뉴항목`)
 
+    // 월별 베스트 메뉴들 보여주기
+    for(let i = 0; mainMenu.length; i++){
+        try{
+            let menuNum = mainMenu[0][i].항목번호
+            const yearbest = await useDB.query(`
+            select SUM(수량) as maxyear from 주문 inner join 주문내역 on 주문.주문번호 = 주문내역.주문_주문번호 where 메뉴항목_항목번호 = "${Number(mainMenu[0][i].항목번호)}" and 주문날짜 like "2023-11%"`)
+            console.log(menuNum, yearbest[0][0].maxyear)
+
+            const add = await useDB.query(`
+            insert into 순위(메뉴항목번호, 날짜, 수량) values(?,?,?)`, [menuNum, "2023-10", yearbest[0][0].maxyear])
+
+            
+            // const addMenu = await useDB.query(`
+            // insert into 최다판매(년월, 순위, 메뉴이름, 판매량) values(?,?,?,?)`, ["2023-10, "])
+        }catch{
+            console.log("값 없음")
+            break;
+        }
+    }
+
+
     return res.render("Admin", {
         uid : req.session.userid,
         companyList : companyList[0],
